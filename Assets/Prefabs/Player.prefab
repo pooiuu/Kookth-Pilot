@@ -53,10 +53,10 @@ GameObject:
   - component: {fileID: 23153289784089126}
   - component: {fileID: 50334572059709516}
   - component: {fileID: 61502308054352226}
-  - component: {fileID: 114716490924789600}
+  - component: {fileID: 114124354437313802}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1590266665339286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.73, z: 0}
   m_LocalScale: {x: 2.0310638, y: 0.7550747, z: 0.7550747}
   m_Children:
   - {fileID: 4642452104061142}
@@ -115,7 +115,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: dc3b485d996598b459aee3200b439b18, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -186,7 +186,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114716490924789600
+--- !u!114 &114124354437313802
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -194,9 +194,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1590266665339286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9cc9e9a564c5f43ada2400c0ba82b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dfc08aeeaf282942b63390f85f79edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 5
-  engine1: {fileID: 4642452104061142}
-  engine2: {fileID: 4268789104080108}
+  pInfo:
+    index: 0
+    hp: 100
+    isDead: 0
+  eInfo:
+    power: 5
+    engine1: {fileID: 4642452104061142}
+    engine2: {fileID: 4268789104080108}
