@@ -9,6 +9,7 @@ public class PlayerInfo
 	public float hp = 100;
 
 	public bool isDead = false;
+	public bool isGoal = false;
 }
 [System.Serializable]
 public class EngineInfo {
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour {
 	public EngineInfo eInfo;
 	private Rigidbody2D rb;
 
-	public event NoParameter OnDamaged;
+	public event CollisionProcess OnDamaged;
 	public event NoParameter OnDead;
 	// Use this for initialization
 	void Start () {
@@ -32,12 +33,12 @@ public class Player : MonoBehaviour {
 
 	public void OnCollisionEnter2D (Collision2D col)
 	{
-		Damaged ();
+		Damaged (col);
 	}
 
 	public void OnCollisionStay2D (Collision2D col)
 	{
-		Damaged ();
+		Damaged (col);
 	}
 
 	public static void SetLocalIndex (int index)
@@ -45,13 +46,13 @@ public class Player : MonoBehaviour {
 		localIndex = index;
 	}
 
-	public void Damaged ()
+	public void Damaged (Collision2D col)
 	{
 		float damage = Mathf.Max(1f, rb.mass * rb.velocity.magnitude);
 		pInfo.hp = Mathf.Max (0f, pInfo.hp - damage);
 			
 		if (null != OnDamaged)
-			OnDamaged.Invoke();
+			OnDamaged.Invoke(col, this);
 		
 		if (pInfo.hp <= 0) {
 			pInfo.isDead = true;

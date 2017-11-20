@@ -28,9 +28,7 @@ public class MapGenerate : MonoBehaviour {
     Vector3 roofPos;
     Vector3 floorPos;
 
-
     public GameObject[] instFloor;
-
 
     //랜덤 맵을 생성하는 함수(Start 문에서 사용합니다)
     void createPillar()
@@ -58,8 +56,6 @@ public class MapGenerate : MonoBehaviour {
         //장애물 기둥의 기본 길이는 ViewHeight입니다. X크기를 0으로 둔 이유는 후에 pillarWidth를 이용하여 Random값으로 받기 위함입니다.
         pillarPrefab.transform.localScale = new Vector3(0, viewHeight, 1);
 
-
-
         for (int i=0; i<pillarsNum; i++)
         {
             //기둥의 너비를 Random으로 받음 (PlayerSize 는 현재 플레이어(비행물체)의 Width 값을 받았습니다. Random.range 를 이용하여 Width값의 1/2에서 X2 까지의 값 중에서 랜덤하게 받아옵니다.)
@@ -82,18 +78,34 @@ public class MapGenerate : MonoBehaviour {
             //
             pillarPos += new Vector3(pillarSpace, 0, 0);
         }
-        //마지막으로 골인 지점을 생성합니다.
-        tempGoal = Instantiate(Goal, pillarPos, Quaternion.identity);
-        tempGoal.transform.localScale = new Vector3(1,viewHeight,0);
-
-
     }
+
+	void createWall()
+	{
+		Vector3 startPos = Camera.main.ViewportToWorldPoint (new Vector3 (0f, 0.5f, 0f)) + Vector3.right*0.5f; // 벽의 두깨가 1이기에 0.5만큼 더 밀어줌
+		startPos.z = 0f;
+		Vector3 endPos = startPos + Vector3.right * (mapWidth - 1f);
+		GameObject leftWall = Instantiate (pillarPrefab, startPos, Quaternion.identity);
+		GameObject rightWall = Instantiate (pillarPrefab, endPos, Quaternion.identity);
+		//createPillar에서 pillarPrefab의 사이즈를 Vector3 (0, height, 1)로 지정함
+		leftWall.transform.localScale += Vector3.right; // 각 벽의 x 사이즈를 1로 지정
+		rightWall.transform.localScale += Vector3.right;
+
+		leftWall.name = "LeftWall";
+		rightWall.name = "RightWall";
+		leftWall.transform.parent = transform;
+		rightWall.transform.parent = transform;
+
+		//Create Goal
+		float goalSizeX = Goal.GetComponent<BoxCollider2D>().size.x;
+		GameObject tmpGoal = Instantiate(Goal, endPos - Vector3.right * goalSizeX, Quaternion.identity);
+		tmpGoal.transform.parent = transform;
+		tmpGoal.transform.localScale = new Vector3 (tmpGoal.transform.localScale.x, viewHeight, 1f);
+	}
 
     // Use this for initialization
     void Start () {
         instFloor = new GameObject[2];
-
-
         viewWidth = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)).x - Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
 
         createPillar();
@@ -110,13 +122,6 @@ public class MapGenerate : MonoBehaviour {
            
         }
         mapWidth = viewWidth + pillarPos.x;
-
-
+		createWall ();
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
 }
