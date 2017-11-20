@@ -48,6 +48,7 @@ public class Player : MonoBehaviour {
 
 	public void Damaged (Collision2D col)
 	{
+        //질량과 속도에 비례한 데미지를 입습니다.
 		float damage = Mathf.Max(1f, rb.mass * rb.velocity.magnitude);
 		pInfo.hp = Mathf.Max (0f, pInfo.hp - damage);
 			

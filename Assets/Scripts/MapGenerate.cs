@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerate : MonoBehaviour {
 
@@ -30,6 +31,8 @@ public class MapGenerate : MonoBehaviour {
 
     public GameObject[] instFloor;
 
+
+
     //랜덤 맵을 생성하는 함수(Start 문에서 사용합니다)
     void createPillar()
     {
@@ -42,7 +45,6 @@ public class MapGenerate : MonoBehaviour {
         //위 아래 기둥을 저장할 배열입니다.
         GameObject[] tempPillar = new GameObject[2];
 
-        GameObject tempGoal;
 
         //플레이어(비행물체)의 Width 값을 받아옵니다. 이는 플레이어의 콜라이더(BoxCollider2D)의 x 너비를 받아옵니다.
         float playerSize = PlayerPrefab.GetComponent<Collider2D>().bounds.size.x;
@@ -50,6 +52,10 @@ public class MapGenerate : MonoBehaviour {
         float pillarWidth;
         //위 아래 기둥 사이의 간격을 Random 값으로 받기 위해 선언한 변수입니다.
         float gapSize;
+        //기둥 사이의 간격의 높이를 Random 값으로 받기 위한 변수입니다.
+        float gapHeight;
+        //기둥과 기둥사이의 간격을 임의로 설정하기 위한 변수입니다.
+        float tempSpace;
 
         //어떤 화면에서든 맵 생성이 잘 될 수 있게 하기 위해 View의 높이를 구합니다. Viewport의 Y축 최소에서 최대까지의 World 좌표계를 구하여 계산합니다.
         viewHeight = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
@@ -62,6 +68,9 @@ public class MapGenerate : MonoBehaviour {
             pillarWidth = Random.Range(playerSize / 2, playerSize * 2);
             //기둥 사이의 간격을 Random으로 받음 (역시 PlayerSize 를 이용하여 Random 값을 받습니다.)
             gapSize = Random.Range(playerSize, playerSize * 2);
+
+            gapHeight = Random.Range(-viewHeight / 2 + gapSize / 2, viewHeight / 2 - gapSize / 2);
+
             for (int j = 0; j < 2; j++)
             {
                 //기둥을 생성합니다.
@@ -73,13 +82,33 @@ public class MapGenerate : MonoBehaviour {
 
             }
             //맵의 높이의 1/2(= 중간) + gapsize를 위 아래 기둥에 각각 적용합니다. gapsize만큼 위 아래 기둥의 간격을 벌립니다.
-            tempPillar[0].transform.position += new Vector3(0, viewHeight / 2 + gapSize / 2, 0);
-            tempPillar[1].transform.position += new Vector3(0, -(viewHeight / 2 + gapSize / 2), 0);
-            //
-            pillarPos += new Vector3(pillarSpace, 0, 0);
+            tempPillar[0].transform.position += new Vector3(0, (viewHeight / 2 + gapSize / 2) + gapHeight, 0);
+            tempPillar[1].transform.position += new Vector3(0, -(viewHeight / 2 + gapSize / 2) + gapHeight, 0);
+
+            if (i >= pillarsNum * (0.6f))
+            {
+                //맵의 60퍼 이상에 도달하면 기둥과 기둥간의 간격이 랜덤하게 줄어듭니다.
+                float temp1 = pillarWidth + playerSize;
+                float temp2 = pillarWidth + pillarSpace;
+                if(temp1 > temp2)
+                {
+                    tempSpace = Random.Range(temp2, temp1);
+                }else
+                {
+                    tempSpace = Random.Range(temp1, temp2);
+                }
+            }
+            else
+            {
+                tempSpace = pillarWidth + pillarSpace;
+            }
+            
+            //장애물 기둥의 위치를 지정합니다.
+            pillarPos += new Vector3(tempSpace, 0, 0);
         }
     }
 
+    //맵의 왼쪽, 오른쪽 끝에 벽을 생성합니다.
 	void createWall()
 	{
 		Vector3 startPos = Camera.main.ViewportToWorldPoint (new Vector3 (0f, 0.5f, 0f)) + Vector3.right*0.5f; // 벽의 두깨가 1이기에 0.5만큼 더 밀어줌
@@ -104,6 +133,7 @@ public class MapGenerate : MonoBehaviour {
 	}
 
     // Use this for initialization
+    // 맵의 생성은 한 번만 해도 되므로 Start에서 시행합니다.
     void Start () {
         instFloor = new GameObject[2];
         viewWidth = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)).x - Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
@@ -123,5 +153,14 @@ public class MapGenerate : MonoBehaviour {
         }
         mapWidth = viewWidth + pillarPos.x;
 		createWall ();
+    }
+
+    private void Update()
+    {
+        //R을 누르면 scene을 재시작합니다.
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Scene1", LoadSceneMode.Single);
+        }
     }
 }

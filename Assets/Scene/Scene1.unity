@@ -188,6 +188,7 @@ MonoBehaviour:
     index: 0
     hp: 100
     isDead: 0
+    isGoal: 0
   eInfo:
     power: 10
     engine1: {fileID: 676623142}
@@ -228,7 +229,7 @@ MonoBehaviour:
   viewHeight: 0
   mapWidth: 0
   pillarsNum: 10
-  pillarSpace: 10
+  pillarSpace: 5
   pillarPos: {x: 0, y: 0, z: 0}
   instFloor: []
 --- !u!4 &1425735753

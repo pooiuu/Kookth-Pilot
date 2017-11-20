@@ -94,7 +94,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1590266665339286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.73, z: 0}
+  m_LocalPosition: {x: 4, y: -0.73, z: 0}
   m_LocalScale: {x: 2.0310638, y: 0.7550747, z: 0.7550747}
   m_Children:
   - {fileID: 4642452104061142}
@@ -154,7 +154,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 1
-  m_AngularDrag: 5
+  m_AngularDrag: 7
   m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
     index: 0
     hp: 100
     isDead: 0
+    isGoal: 0
   eInfo:
     power: 5
     engine1: {fileID: 4642452104061142}
