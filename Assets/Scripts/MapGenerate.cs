@@ -106,6 +106,11 @@ public class MapGenerate : MonoBehaviour {
             //장애물 기둥의 위치를 지정합니다.
             pillarPos += new Vector3(tempSpace, 0, 0);
         }
+        float goalSizeX = Goal.GetComponent<BoxCollider2D>().size.x;
+        GameObject tmpGoal = Instantiate(Goal, pillarPos, Quaternion.identity);
+        tmpGoal.transform.parent = transform;
+        tmpGoal.GetComponent<SpriteRenderer>().size = new Vector2(tmpGoal.transform.localScale.x, viewHeight);
+        tmpGoal.GetComponent<BoxCollider2D>().size = new Vector2(tmpGoal.transform.localScale.x, viewHeight);
     }
 
     //맵의 왼쪽, 오른쪽 끝에 벽을 생성합니다.
@@ -127,10 +132,7 @@ public class MapGenerate : MonoBehaviour {
 
 		//Create Goal
 		float goalSizeX = Goal.GetComponent<BoxCollider2D>().size.x;
-		GameObject tmpGoal = Instantiate(Goal, endPos - Vector3.right * goalSizeX, Quaternion.identity);
-		tmpGoal.transform.parent = transform;
-		tmpGoal.transform.localScale = new Vector3 (tmpGoal.transform.localScale.x, viewHeight, 1f);
-	}
+    }
 
     // Use this for initialization
     // 맵의 생성은 한 번만 해도 되므로 Start에서 시행합니다.
