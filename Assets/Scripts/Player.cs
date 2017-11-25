@@ -18,6 +18,13 @@ public class EngineInfo {
 	public Transform engine2;  			// Right Engine
 	public SpriteRenderer igniteEffect1;    // Left Engine Effect
 	public SpriteRenderer igniteEffect2;	// Right Engine Effect
+
+	public Transform GetEngine (EngineDirection d)
+	{
+		if (d == EngineDirection.Left)
+			return engine1;
+		return engine2;
+	}
 }
 public class Player : MonoBehaviour {
 	public static int localIndex = 0;
