@@ -113,6 +113,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1590266665339286, guid: 7e0651feeab7d864389bf5e29d732e67,
     type: 2}
   m_PrefabInternal: {fileID: 1690447250}
+--- !u!114 &201387393 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114872505386227086, guid: 7e0651feeab7d864389bf5e29d732e67,
+    type: 2}
+  m_PrefabInternal: {fileID: 1690447250}
+  m_Script: {fileID: 11500000, guid: 9dfc08aeeaf282942b63390f85f79edc, type: 3}
 --- !u!1 &313750544
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,18 +166,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.95862067, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: f1c3b16c43e04174fbb678409d71cb42, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -346,6 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 840569569}
   - component: {fileID: 840569568}
+  - component: {fileID: 840569570}
   m_Layer: 0
   m_Name: LocalInput
   m_TagString: Untagged
@@ -365,11 +372,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPlayer: []
-  playerInput:
-  - Left: 97
-    Right: 100
-  - Left: 276
-    Right: 275
+  inputA: 0
+  inputD: 0
+  inputArrow_Left: 0
+  inputArrow_Right: 0
 --- !u!4 &840569569
 Transform:
   m_ObjectHideFlags: 0
@@ -383,6 +389,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840569570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 840569567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb07f61ebb3874b45841111ce78b022c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 313750546}
+  player: {fileID: 201387393}
 --- !u!1 &1425735751
 GameObject:
   m_ObjectHideFlags: 0
